@@ -7,12 +7,22 @@
     <script src="scripts/client.js"></script>
   </head>
   <body ng-app="giphyApp" ng-controller="GiphyController as giphy">
-    {{ giphy.fred }}
     <button ng-click="giphy.getRandomImage()">Feeling Lucky?</button>
-    <input type="text" placeholder="search for a giphy here" name="query"/>
+
+    <form>
+      <input type="text" ng-model="giphy.search" placeholder="search for a giphy here" name="query">
+      <button ng-click="giphy.getSearchImage()">Search</button>
+    </form>
+
     <div>
       <img ng-src="{{giphy.images}}"/>
     </div>
+
+    <div ng-repeat="result in giphy.results track by $index">
+      <img ng-src="{{result}}">
+    </div>
+
+
 
   </body>
 </html>

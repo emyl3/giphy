@@ -7,19 +7,37 @@ var API_KEY =  'api_key=dc6zaTOxFJmzC';
 
 function GiphyController($http) {
   var giphy = this;
-
-  console.log('GiphyController loaded');
-
+  giphy.searchString = '';
+  giphy.results = [];
   giphy.images = '';
 
-   giphy.getRandomImage = function() {
-    $http.get(API + '/random?' + API_KEY + '&tag=') //key ?api_key=dc6zaTOxFJmzC
+  giphy.getRandomImage = function () {
+    giphy.images = '';
+    $http.get(API + '/random?' + API_KEY + '&tag=')
       .then(function (response) {
-        console.log('response.data', response.data.data);
         giphy.images = response.data.data.image_url;
-        console.log(giphy.images);
       });
-
   };
 
-  }
+  giphy.getSearchImage = function () {
+    giphy.results = [];
+    giphy.searchString = '';
+
+    if (/\s/.test(giphy.search)) {
+      giphy.searchString = (giphy.search).split(' ').join('+');
+    } else {
+      giphy.searchString = giphy.search;
+    }
+
+    console.log(giphy.searchString);
+
+    $http.get(API + '/search?q=' + giphy.searchString + '&' + API_KEY)
+      .then(function (response) {
+        var arrayOfSearch = response.data.data;
+        arrayOfSearch.forEach(function (element) {
+          var search = element.images.downsized.url;
+          giphy.results.push(search);
+        });
+      });
+  };
+}
