@@ -3,26 +3,36 @@
   <head>
     <meta charset="utf-8">
     <title>Giphy Assignment</title>
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-    <script src="scripts/client.js"></script>
+    <script src="scripts/module.js"></script>
+    <script src="scripts/giphy.controller.js"></script>
+    <script src="scripts/gif.service.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Bungee+Inline" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
   </head>
+
   <body ng-app="giphyApp" ng-controller="GiphyController as giphy">
-    <button ng-click="giphy.getRandomImage()">Feeling Lucky?</button>
 
-    <form>
-      <input type="text" ng-model="giphy.search" placeholder="search for a giphy here" name="query">
-      <button ng-click="giphy.getSearchImage()">Search</button>
-    </form>
+    <h1>Gif Generator</h1>
 
-    <div>
-      <img ng-src="{{giphy.images}}"/>
+    <div class="navigation">
+      <button id="generateRandom" ng-click="giphy.getRandomImage()">Feeling Lucky?</button>
+
+      <form>
+        <input type="text" ng-model="giphy.search" placeholder="search for a giphy here">
+        <button ng-click="giphy.getSearchImage()">Search</button>
+      </form>
     </div>
 
-    <div ng-repeat="result in giphy.results track by $index">
-      <img ng-src="{{result}}">
+    <div class="random" id="{{giphy.sectionOneStatus}}">
+      <img ng-src="{{giphy.image}}"/>
     </div>
 
-
-
+    <div class= "search" id="{{giphy.sectionTwoStatus}}">
+      <img ng-repeat="result in giphy.results track by $index" ng-src="{{result}}">
+    </div>
   </body>
 </html>
