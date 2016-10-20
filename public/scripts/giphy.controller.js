@@ -18,7 +18,7 @@ function GiphyController(gif) {
     });
   };
 
-  giphy.getSearchImage = function () {
+  giphy.getSearchImage = function (search) {
     var searchString = '';
 
     //clears previous results
@@ -26,8 +26,6 @@ function GiphyController(gif) {
     giphy.image = '';
 
     //sets search value and clears form data
-    var search = giphy.search;
-    giphy.search = '';
 
     giphy.sectionOneStatus = 'hide';
     giphy.sectionTwoStatus = 'show';
@@ -42,10 +40,12 @@ function GiphyController(gif) {
 
       gif.searchQuery(searchString).then(function (results) {
         giphy.results = results;
+        search = '';
       });
 
     } else {
       alert('Please enter any search term... not a blank one. :-)');
+      search = '';
     }
   };
 }

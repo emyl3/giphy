@@ -3,18 +3,27 @@ angular.module('giphyApp')
 
 function GifAPIService($http) {
   const API = 'http://api.giphy.com/v1/gifs';
-  const API_KEY = 'api_key=dc6zaTOxFJmzC';
+  const API_KEY = 'dc6zaTOxFJmzC';
 
   this.randomImageRequest = function () {
-    return $http.get(API + '/random?' + API_KEY + '&tag=')
-      .then(function (response) {
+    return $http.get(API + '/random', {
+      params: {
+        api_key: API_KEY,
+        rating: 'y',
+      },
+    }).then(function (response) {
         return response.data.data.image_url;
       });
   };
 
   this.searchQuery = function (searchString) {
-    return $http.get(API + '/search?q=' + searchString + '&' + API_KEY)
-      .then(function (response) {
+    return $http.get(API + '/search', {
+      params: {
+        api_key: API_KEY,
+        rating: 'y',
+        q: searchString,
+      },
+    }).then(function (response) {
         var arrayOfResponse = response.data.data;
         var result = [];
 
